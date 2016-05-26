@@ -1,4 +1,6 @@
-package com.zonsim.myhttp;
+package com.zonsim.myhttp.net;
+
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -8,7 +10,12 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.zonsim.myhttp.MyApp;
+import com.zonsim.myhttp.utils.FileCopyUtils;
+import com.zonsim.myhttp.utils.MD5Utils;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
@@ -16,24 +23,40 @@ import java.util.Map;
  * Created by tang-jw on 2016/5/26.
  */
 public class GsonRequest<T> extends Request<T> {
+	private static final String TAG = "GsonRequest";
 	private final Gson gson = new Gson();
-	private final Class<T> clazz;
+	private final Class<? extends T> clazz;
 	private final Map<String, String> headers;
 	private final Response.Listener<T> listener;
+	private boolean flag;
+	
+	
 	
 	/**
 	 * Make a GET request and return a parsed object from JSON.
 	 *
-	 * @param url URL of the request to make
-	 * @param clazz Relevant class object, for Gson's reflection
+	 * @param method     URL of the request to make
+	 * @param url     URL of the request to make
+	 * @param clazz   Relevant class object, for Gson's reflection
 	 * @param headers Map of request headers
+	 * @param flag     URL of the request to make   
 	 */
-	public GsonRequest(String url, Class<T> clazz, Map<String, String> headers,
-	                   Response.Listener<T> listener, Response.ErrorListener errorListener) {
-		super(Method.GET, url, errorListener);
+	public GsonRequest(int method, String url, Class<T> clazz, Map<String, String> headers,
+	                   Response.Listener<T> listener, Response.ErrorListener errorListener, 
+	                   boolean flag) {
+		super(method, url, errorListener);
 		this.clazz = clazz;
 		this.headers = headers;
 		this.listener = listener;
+		this.flag = flag;
+	}
+	
+	public Gson getGson() {
+		return gson;
+	}
+	
+	public Class<? extends T> getClazz() {
+		return clazz;
 	}
 	
 	@Override
@@ -52,12 +75,20 @@ public class GsonRequest<T> extends Request<T> {
 			String json = new String(
 					response.data,
 					HttpHeaderParser.parseCharset(response.headers));
-			return Response.success(
-					gson.fromJson(json, clazz),
-					HttpHeaderParser.parseCacheHeaders(response));
+			Log.d(TAG, "" + json);
+			T result = gson.fromJson(json, clazz);
+			// 如果解析成功,需要缓存就缓存
+			if (flag) {
+				Log.d(TAG, "result 缓存到本地");
+				FileCopyUtils.copy(response.data,new File(MyApp.application.getCacheDir(),""+ MD5Utils.encode(getUrl())));
+			}
+			return Response.success(result, HttpHeaderParser.parseCacheHeaders(response));
 		} catch (UnsupportedEncodingException e) {
 			return Response.error(new ParseError(e));
 		} catch (JsonSyntaxException e) {
+			return Response.error(new ParseError(e));
+		} catch (IOException e) {
+			e.printStackTrace();
 			return Response.error(new ParseError(e));
 		}
 	}

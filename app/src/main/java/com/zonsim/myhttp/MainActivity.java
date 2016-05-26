@@ -14,6 +14,8 @@ import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
+import com.zonsim.myhttp.bean.ResultBean;
+import com.zonsim.myhttp.net.GsonRequest;
 
 import java.io.IOException;
 
@@ -23,6 +25,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.android.volley.Request.*;
 
 public class MainActivity extends AppCompatActivity {
 	
@@ -178,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 		
-		GsonRequest<ResultBean> resultBeanGsonRequest = new GsonRequest<>(testUrl, ResultBean.class, null, new com.android.volley.Response.Listener<ResultBean>() {
+		GsonRequest<ResultBean> resultBeanGsonRequest = new GsonRequest<>(Method.GET,testUrl, ResultBean.class, null, new com.android.volley.Response.Listener<ResultBean>() {
 			@Override
 			public void onResponse(ResultBean response) {
 				Logger.d(response.getMusicians().get(0).getFirstName());
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 			public void onErrorResponse(VolleyError error) {
 				
 			}
-		});
+		},false);
 		
 		
 		RequestQueue requestQueue = Volley.newRequestQueue(this);

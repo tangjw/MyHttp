@@ -1,4 +1,4 @@
-package com.zonsim.myhttp;
+package com.zonsim.myhttp.bean;
 
 import java.util.List;
 
