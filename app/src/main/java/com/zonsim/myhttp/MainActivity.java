@@ -1,0 +1,138 @@
+package com.zonsim.myhttp;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.orhanobut.logger.Logger;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class MainActivity extends AppCompatActivity {
+	
+	private static final String TAG = "MainActivity";
+	private final String testUrl = "http://192.168.1.57:8080/okhttp.txt";
+	private Button mOkHttp;
+	private final OkHttpClient client = new OkHttpClient();
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		mOkHttp = (Button) findViewById(R.id.button);
+		
+		mOkHttp.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+//							execute();
+							enqueue();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
+			}
+		});
+		
+		
+	}
+	
+	
+	
+	/**
+	 * okhttp网络框架  同步
+	 */
+	private void execute() throws IOException {
+		
+		Request request = new Request.Builder()
+				.url(testUrl)
+				.build();
+		
+		Response response = client.newCall(request).execute();
+		
+		if (response.isSuccessful()) {
+			System.out.println(response.code());
+			System.out.println(response.body().string());
+		}
+		
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				
+			}
+			
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				if (response.isSuccessful()) {
+					System.out.println(response.code());
+					String string = response.body().string();
+					System.out.println(string);
+					System.out.println(Thread.currentThread().getName());
+					Log.d(TAG,string);
+					Logger.d(string);
+				}
+			}
+		});
+		
+	}
+	
+	/**
+	 * okhttp网络框架  异步请求
+	 */
+	private void enqueue() throws IOException {
+		
+		Request request = new Request.Builder()
+				.url(testUrl)
+				.build();
+		
+		Response response = client.newCall(request).execute();
+		
+		if (response.isSuccessful()) {
+			System.out.println(response.code());
+			System.out.println(response.body().string());
+		}
+		
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				
+			}
+			
+			@Override
+			public void onResponse(Call call, final Response response) throws IOException {
+				if (response.isSuccessful()) {
+					System.out.println(response.code());
+					final String string = response.body().string();
+					System.out.println(string);
+					
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(MainActivity.this, string, Toast.LENGTH_SHORT).show();
+						}
+					});
+					Log.d(TAG,string);
+					Logger.i(string);
+					Logger.json(string);
+					
+				}
+			}
+		});
+		
+	}
+	
+}
