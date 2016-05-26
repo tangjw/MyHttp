@@ -72,23 +72,25 @@ public class GsonRequest<T> extends Request<T> {
 	@Override
 	protected Response<T> parseNetworkResponse(NetworkResponse response) {
 		try {
-			String json = new String(
-					response.data,
+			String json = new String(response.data,
 					HttpHeaderParser.parseCharset(response.headers));
 			Log.d(TAG, "" + json);
-			T result = gson.fromJson(json, clazz);
-			// 如果解析成功,需要缓存就缓存
-			if (flag) {
-				Log.d(TAG, "result 缓存到本地");
-				FileCopyUtils.copy(response.data,new File(MyApp.application.getCacheDir(),""+ MD5Utils.encode(getUrl())));
+			T result = null;
+			try {
+				result = gson.fromJson(json, clazz);
+				// 如果解析成功,需要缓存就缓存
+				if (flag) {
+					Log.d(TAG, "result 缓存到本地");
+					FileCopyUtils.copy(response.data,new File(MyApp.application.getCacheDir(),""+ MD5Utils.encode(getUrl())));
+				}
+			} catch (JsonSyntaxException | IOException e) {
+				Log.e(TAG, "result解析失败");
+				e.printStackTrace();
 			}
 			return Response.success(result, HttpHeaderParser.parseCacheHeaders(response));
 		} catch (UnsupportedEncodingException e) {
 			return Response.error(new ParseError(e));
 		} catch (JsonSyntaxException e) {
-			return Response.error(new ParseError(e));
-		} catch (IOException e) {
-			e.printStackTrace();
 			return Response.error(new ParseError(e));
 		}
 	}

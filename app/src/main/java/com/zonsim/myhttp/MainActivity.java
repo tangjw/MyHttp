@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 			public void onErrorResponse(VolleyError error) {
 				
 			}
-		},false);
+		},true);
 		
 		
 		RequestQueue requestQueue = Volley.newRequestQueue(this);
