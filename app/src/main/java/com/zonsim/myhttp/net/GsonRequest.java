@@ -31,19 +31,17 @@ public class GsonRequest<T> extends Request<T> {
 	private boolean flag;
 	
 	
-	
 	/**
 	 * Make a GET request and return a parsed object from JSON.
 	 *
-	 * @param method     URL of the request to make
+	 * @param method  URL of the request to make
 	 * @param url     URL of the request to make
 	 * @param clazz   Relevant class object, for Gson's reflection
 	 * @param headers Map of request headers
-	 * @param flag     URL of the request to make   
+	 * @param flag    URL of the request to make
 	 */
-	public GsonRequest(int method, String url, Class<T> clazz, Map<String, String> headers,
-	                   Response.Listener<T> listener, Response.ErrorListener errorListener, 
-	                   boolean flag) {
+	public GsonRequest(int method, String url, Map<String, String> headers, Class<? extends T> clazz,
+	                   Response.Listener<T> listener, Response.ErrorListener errorListener, boolean flag) {
 		super(method, url, errorListener);
 		this.clazz = clazz;
 		this.headers = headers;
@@ -81,7 +79,7 @@ public class GsonRequest<T> extends Request<T> {
 				// 如果解析成功,需要缓存就缓存
 				if (flag) {
 					Log.d(TAG, "result 缓存到本地");
-					FileCopyUtils.copy(response.data,new File(MyApp.application.getCacheDir(),""+ MD5Utils.encode(getUrl())));
+					FileCopyUtils.copy(response.data, new File(MyApp.application.getCacheDir(), "" + MD5Utils.encode(getUrl())));
 				}
 			} catch (JsonSyntaxException | IOException e) {
 				Log.e(TAG, "result解析失败");

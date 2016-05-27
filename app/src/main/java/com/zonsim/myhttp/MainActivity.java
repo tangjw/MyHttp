@@ -1,5 +1,6 @@
 package com.zonsim.myhttp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,8 +15,10 @@ import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
-import com.zonsim.myhttp.bean.ResultBean;
-import com.zonsim.myhttp.net.GsonRequest;
+import com.zonsim.myhttp.activity.PostActivity;
+import com.zonsim.myhttp.bean.BaseResponseBean;
+import com.zonsim.myhttp.bean.TestBean;
+import com.zonsim.myhttp.net.HttpLoader;
 
 import java.io.IOException;
 
@@ -26,14 +29,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.android.volley.Request.*;
-
 public class MainActivity extends AppCompatActivity {
 	
 	private static final String TAG = "MainActivity";
 	private final String testUrl = "http://192.168.1.57:8080/okhttp.txt";
 	private Button mOkHttp;
 	private final OkHttpClient client = new OkHttpClient();
+	private Button mButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		
 		mOkHttp = (Button) findViewById(R.id.button);
+		mButton = (Button) findViewById(R.id.button2);
+		
+		mButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, PostActivity.class));
+			}
+		});
 		
 		mOkHttp.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -182,23 +192,37 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 		
-		GsonRequest<ResultBean> resultBeanGsonRequest = new GsonRequest<>(Method.GET,testUrl, ResultBean.class, null, new com.android.volley.Response.Listener<ResultBean>() {
-			@Override
-			public void onResponse(ResultBean response) {
-				Logger.d(response.getMusicians().get(0).getFirstName());
-				System.out.println(response.getMusicians().get(0).getFirstName());
-			}
-		}, new com.android.volley.Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				
-			}
-		},true);
-		
-		
 		RequestQueue requestQueue = Volley.newRequestQueue(this);
 		
 		
-		requestQueue.add(resultBeanGsonRequest);
+//		requestQueue.add(stringRequest);
+		
+		
+		HttpLoader.get(testUrl, null, TestBean.class, 100, new HttpLoader.ResponseListener() {
+			@Override
+			public void onGetResponseSuccess(int requestCode, BaseResponseBean response) {
+				if (requestCode == 100) {
+					TestBean result = (TestBean) response;
+					String email = result.getInfo().getProgrammers().get(0).getEmail();
+					Toast.makeText(MainActivity.this, email, Toast.LENGTH_SHORT).show();
+					Logger.i(email);
+				}
+			}
+			
+			@Override
+			public void onGetResponseError(int requestCode, VolleyError error) {
+				if (requestCode == 100) {
+					Logger.e(error.getMessage());
+				}
+			}
+		},false);
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }

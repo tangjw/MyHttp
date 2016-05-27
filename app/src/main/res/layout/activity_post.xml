@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+    
+
+    
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ededed"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:focusableInTouchMode="true"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:text="您的请您耐心等待!"
+        android:textColor="#5a5a5a"
+        android:textSize="16sp"/>
+    
+    <LinearLayout
+        android:id="@+id/ll_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:background="#FFF"
+        android:gravity="center_vertical">
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名："
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+        
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:hint="请输入姓名"
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+    
+    </LinearLayout>
+    
+    
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ll_name"
+        android:background="#FFF"
+        android:gravity="center_vertical">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="联系电话："
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+        
+        <EditText
+            android:id="@+id/et_phone"
+            android:inputType="phone"
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:hint="请输入电话号码"
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout2"
+        android:layout_marginTop="1dp"
+        android:background="#FFF"
+        android:gravity="center_vertical">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="邮&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;编："
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+        
+        <EditText
+            android:id="@+id/et_postcode"
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:inputType="number"
+            android:hint="请输入邮编"
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll_idCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout"
+        android:background="#FFF"
+        android:gravity="center_vertical">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="地&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;址："
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+        
+        <EditText
+            android:id="@+id/et_address"
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:hint="请输入地址"
+            android:textColor="#535353"
+            android:textSize="16sp"/>
+    
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/btn_submit1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#4081c1"
+        android:text="提交信息"
+        android:textColor="#ffffff"
+        android:textSize="16sp"/>
+
+</RelativeLayout>
