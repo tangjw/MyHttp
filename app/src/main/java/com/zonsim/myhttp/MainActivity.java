@@ -197,7 +197,9 @@ public class MainActivity extends AppCompatActivity {
 		
 //		requestQueue.add(stringRequest);
 		
-		
+		/**
+		 * volley Get请求
+		 */
 		HttpLoader.get(testUrl, null, TestBean.class, 100, new HttpLoader.ResponseListener() {
 			@Override
 			public void onGetResponseSuccess(int requestCode, BaseResponseBean response) {
