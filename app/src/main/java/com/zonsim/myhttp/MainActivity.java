@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
+import com.zonsim.myhttp.activity.ImageActivity;
 import com.zonsim.myhttp.activity.PostActivity;
 import com.zonsim.myhttp.bean.BaseResponseBean;
 import com.zonsim.myhttp.bean.TestBean;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 	private Button mOkHttp;
 	private final OkHttpClient client = new OkHttpClient();
 	private Button mButton;
+	private Button mImage;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
 		
 		mOkHttp = (Button) findViewById(R.id.button);
 		mButton = (Button) findViewById(R.id.button2);
+		mImage = (Button) findViewById(R.id.button6);
+		
+		mImage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, ImageActivity.class));
+				
+			}
+		});
 		
 		mButton.setOnClickListener(new View.OnClickListener() {
 			@Override
