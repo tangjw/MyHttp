@@ -16,6 +16,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
 import com.zonsim.myhttp.activity.ImageActivity;
+import com.zonsim.myhttp.activity.NewsActivity;
 import com.zonsim.myhttp.activity.PostActivity;
 import com.zonsim.myhttp.bean.BaseResponseBean;
 import com.zonsim.myhttp.bean.TestBean;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 	private final OkHttpClient client = new OkHttpClient();
 	private Button mButton;
 	private Button mImage;
+	private Button mNews;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
 		mOkHttp = (Button) findViewById(R.id.button);
 		mButton = (Button) findViewById(R.id.button2);
 		mImage = (Button) findViewById(R.id.button6);
+		mNews = (Button) findViewById(R.id.button7);
+		
+		mNews.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MyApp.application,NewsActivity.class));
+			}
+		});
 		
 		mImage.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -202,6 +212,16 @@ public class MainActivity extends AppCompatActivity {
 				
 			}
 		});
+		
+		/*StringRequest stringRequest1 = new StringRequest(Method.POST, testUrl,  listener, errorListener) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("params1", "value1");
+				map.put("params2", "value2");
+				return map;
+			}
+		};*/
 		
 		RequestQueue requestQueue = Volley.newRequestQueue(this);
 		

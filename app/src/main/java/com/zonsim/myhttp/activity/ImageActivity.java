@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
@@ -48,7 +49,7 @@ protected void onCreate(@Nullable Bundle savedInstanceState) {
 	mImageView = (ImageView) findViewById(R.id.iv_img);
 	
 	imageLoader = HttpLoader.getImageLoader();
-
+	
 	
 	mViewById.setDefaultImageResId(R.mipmap.ic_launcher);
 	
@@ -99,21 +100,11 @@ private void myImageRequest() {
  * 封装好的imageloader
  */
 private void getImage() {
-	//可以设置参数宽高,压缩类型等
-	imageLoader.get(url, new ImageLoader.ImageListener() {
-		@Override
-		public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-			Bitmap bitmap = imageContainer.getBitmap();
-			mImageView.setImageBitmap(bitmap);
-			Logger.d(bitmap.getRowBytes() * bitmap.getHeight() + "");
-		}
-		
-		@Override
-		public void onErrorResponse(VolleyError volleyError) {
-			
-		}
-	});
 	
-
+	ImageListener imageListener = ImageLoader.getImageListener(mImageView, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+	//可以设置参数宽高,压缩类型等
+	imageLoader.get(url, imageListener);
+	
+	
 }
 }
