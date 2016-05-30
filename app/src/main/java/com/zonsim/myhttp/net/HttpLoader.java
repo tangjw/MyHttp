@@ -255,7 +255,15 @@ private static Request makeGsonRequest(int method, String url, Map<String, Strin
 		@Override
 		public Map<String, String> getHeaders() throws AuthFailureError {
 			//TODO 默认处理，如需自定义header，可重写
+			
+			
+			
 			return generateHeaders();
+		}
+		
+		@Override
+		public byte[] getBody() throws AuthFailureError {
+			return super.getBody();
 		}
 	};
 	gsonRequest.setRetryPolicy(new DefaultRetryPolicy());//设置默认的重试机制，超时时间，重试次数，重试因子等
@@ -346,27 +354,4 @@ private static class RequestListener implements Response.Listener<BaseResponseBe
 	}
 	
 }
-
-/**
- * 成功获取到服务器响应结果的监听，供UI层调用
- */
-public interface StringListener {
-	
-	/**
-	 * 成功获取到服务器响应数据的时候调用
-	 *
-	 * @param requestCode response对应的requestCode
-	 * @param response    返回的response
-	 */
-	void onGetResponseSuccess(int requestCode, String response);
-	
-	/**
-	 * 网络获取失败，(做一些释放性的操作，比如关闭对话框)
-	 *
-	 * @param requestCode 请求码
-	 * @param error       错误信息
-	 */
-	void onGetResponseError(int requestCode, VolleyError error);
-}
-	
 }

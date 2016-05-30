@@ -29,7 +29,7 @@ public class NewsActivity extends AppCompatActivity {
 
 private ListView mNewsList;
 private String serverUrl = "http://118.145.26.215:8090/edu";
-private String newsUrl = "http://192.168.199.185:8080/newslist";
+private String newsUrl = "http://192.168.1.57:8080/newslist.txt";
 private List<NewsListBean.InfoBean> mNews;
 
 @Override

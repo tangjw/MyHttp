@@ -31,7 +31,7 @@ private Button mLoad;
 private Button mLoad1;
 private ImageLoader imageLoader;
 
-private String url = "http://m2.urrpic.info/img/upload/image/20160522/52200032164.jpg";
+private String url = "http://photo.enterdesk.com/2011-2-16/enterdesk.com-1AA0C93EFFA51E6D7EFE1AE7B671951F.jpg";
 private ImageView mImageView;
 private NetworkImageView mViewById;
 

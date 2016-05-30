@@ -93,4 +93,11 @@ public class PostActivity extends AppCompatActivity {
 		super.onPause();
 		HttpLoader.cancelRequest("1111");
 	}
+	
+	private void uploadFile() {
+		
+	}
+	
+	
+	
 }
