@@ -12,8 +12,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.orhanobut.logger.Logger;
 import com.zonsim.myhttp.activity.ImageActivity;
 import com.zonsim.myhttp.activity.NewsActivity;
@@ -24,7 +22,6 @@ import com.zonsim.myhttp.net.HttpLoader;
 
 import java.io.IOException;
 
-import cz.msebera.android.httpclient.Header;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -178,26 +175,6 @@ public class MainActivity extends AppCompatActivity {
 		});
 		
 	}
-	
-	/**
-	 * android-async-http
-	 */
-	private void asynchttp() {
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.get(testUrl, new AsyncHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-				Logger.d(new String(responseBody));
-				Toast.makeText(MainActivity.this, new String(responseBody), Toast.LENGTH_SHORT).show();
-			}
-			
-			@Override
-			public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-				
-			}
-		});
-	}
-	
 	
 	private void useVolley() {
 		StringRequest stringRequest = new StringRequest(testUrl,
